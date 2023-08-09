@@ -10,9 +10,10 @@ resource "aws_spot_instance_request" "rabbitmq" {
     Name = "${var.env}-rabbitmq"
   }
 
-  user_data = base64encode(templatefile("${path.module}/ansible-pull.sh", {
-    env = var.env
-  }))
+  user_data = templatefile("${path.module}/ansible-pull.sh", {
+    env       = var.env
+    component = var.component
+  })
 }
 
 resource "aws_ec2_tag" "name-tag" {
